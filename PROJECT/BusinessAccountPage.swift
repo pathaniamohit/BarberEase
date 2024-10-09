@@ -10,7 +10,7 @@ struct BusinessAccountPage: View {
     @State private var services: [String] = []
     @State private var upcomingAppointments: [String] = []
     @State private var completedAppointments: [String] = []
-    
+
     private let storage = Storage.storage().reference()
 
     var body: some View {
@@ -55,9 +55,8 @@ struct BusinessAccountPage: View {
                                 .foregroundColor(.primary)
                             Spacer()
                             
-                            Button(action: {
-                                print("Edit Services tapped")
-                            }) {
+                            NavigationLink(
+                                destination: ServicesPricing(onSave: fetchServices)) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.blue)
                                     .padding()
@@ -131,11 +130,12 @@ struct BusinessAccountPage: View {
             }
             .background(Color(UIColor.systemGroupedBackground).edgesIgnoringSafeArea(.all))
             .navigationTitle("Business Account")
-            .navigationBarTitleDisplayMode(.inline) // Ensure title is centered
+            .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button("Cancel") {
             })
             .onAppear {
                 fetchCoverImage()
+                fetchServices()
             }
             .sheet(isPresented: $isImagePickerPresented) {
                 CustomProfileImagePicker(image: $coverImage)
@@ -235,4 +235,26 @@ struct BusinessAccountPage: View {
             }
         }.resume()
     }
+        private func fetchServices() {
+            guard let user = Auth.auth().currentUser else {
+                print("No user logged in")
+                return
+            }
+
+            let ref = Database.database().reference().child("business_accounts").child(user.uid).child("services")
+
+            ref.observeSingleEvent(of: .value) { snapshot in
+                guard let servicesArray = snapshot.value as? [[String: Any]] else {
+                    print("No services found")
+                    services = []
+                    return
+                }
+
+                services = servicesArray.compactMap { dict in
+                    guard let name = dict["name"] as? String, let price = dict["price"] as? String else { return nil }
+                    return "\(name): \(price)"
+                }
+            }
+        }
+
 }
