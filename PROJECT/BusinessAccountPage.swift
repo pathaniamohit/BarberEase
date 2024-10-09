@@ -114,19 +114,18 @@ struct BusinessAccountPage: View {
 
                 Spacer()
 
-                Button(action: {
-                }) {
-                    Text("Edit Business Profile")
-                        .fontWeight(.bold)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                        .shadow(radius: 5)
-                        .padding(.horizontal)
-                }
-                .padding(.bottom, 20)
+                NavigationLink(destination: BusinessProfile()) {
+                                    Text("Edit Business Profile")
+                                        .fontWeight(.bold)
+                                        .frame(maxWidth: .infinity)
+                                        .padding()
+                                        .background(Color.blue)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(8)
+                                        .shadow(radius: 5)
+                                        .padding(.horizontal)
+                                }
+                                .padding(.bottom, 20)
             }
             .background(Color(UIColor.systemGroupedBackground).edgesIgnoringSafeArea(.all))
             .navigationTitle("Business Account")
