@@ -21,10 +21,6 @@
 		59A9F1E62C2C513200F32C8E /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9F1E52C2C513200F32C8E /* HomePage.swift */; };
 		59A9F1E82C2C522600F32C8E /* MenuPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9F1E72C2C522600F32C8E /* MenuPage.swift */; };
 		59A9F1EA2C2C524400F32C8E /* AppointmentsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9F1E92C2C524400F32C8E /* AppointmentsPage.swift */; };
-		59A9F1EC2C2CB8AD00F32C8E /* PaymentsAndSubscriptionsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9F1EB2C2CB8AD00F32C8E /* PaymentsAndSubscriptionsPage.swift */; };
-		59A9F1EE2C2CB8BC00F32C8E /* HelpPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9F1ED2C2CB8BC00F32C8E /* HelpPage.swift */; };
-		59A9F1F02C2CB8CA00F32C8E /* PrivacyPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9F1EF2C2CB8CA00F32C8E /* PrivacyPage.swift */; };
-		59A9F1F22C2CB8DE00F32C8E /* RemoveAdsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9F1F12C2CB8DE00F32C8E /* RemoveAdsPage.swift */; };
 		59D95DAF2C35809F00BCF2B3 /* EditProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D95DAE2C35809F00BCF2B3 /* EditProfilePage.swift */; };
 		59D95DB32C6142D000BCF2B3 /* BusinessAccountPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D95DB22C6142D000BCF2B3 /* BusinessAccountPage.swift */; };
 		59D95DCA2C614EF600BCF2B3 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 59D95DC92C614EF600BCF2B3 /* FirebaseAuth */; };
@@ -51,10 +47,6 @@
 		59A9F1E52C2C513200F32C8E /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		59A9F1E72C2C522600F32C8E /* MenuPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPage.swift; sourceTree = "<group>"; };
 		59A9F1E92C2C524400F32C8E /* AppointmentsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentsPage.swift; sourceTree = "<group>"; };
-		59A9F1EB2C2CB8AD00F32C8E /* PaymentsAndSubscriptionsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsAndSubscriptionsPage.swift; sourceTree = "<group>"; };
-		59A9F1ED2C2CB8BC00F32C8E /* HelpPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpPage.swift; sourceTree = "<group>"; };
-		59A9F1EF2C2CB8CA00F32C8E /* PrivacyPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPage.swift; sourceTree = "<group>"; };
-		59A9F1F12C2CB8DE00F32C8E /* RemoveAdsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveAdsPage.swift; sourceTree = "<group>"; };
 		59D95DAE2C35809F00BCF2B3 /* EditProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfilePage.swift; sourceTree = "<group>"; };
 		59D95DB22C6142D000BCF2B3 /* BusinessAccountPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessAccountPage.swift; sourceTree = "<group>"; };
 		59D95DD32C63401400BCF2B3 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -107,11 +99,7 @@
 				59D95DAE2C35809F00BCF2B3 /* EditProfilePage.swift */,
 				595DF2D52C2B46070049C4E2 /* LoginPage.swift */,
 				595DF2D92C2B465B0049C4E2 /* ForgotPasswordPage.swift */,
-				59A9F1EB2C2CB8AD00F32C8E /* PaymentsAndSubscriptionsPage.swift */,
 				59D95DB22C6142D000BCF2B3 /* BusinessAccountPage.swift */,
-				59A9F1ED2C2CB8BC00F32C8E /* HelpPage.swift */,
-				59A9F1EF2C2CB8CA00F32C8E /* PrivacyPage.swift */,
-				59A9F1F12C2CB8DE00F32C8E /* RemoveAdsPage.swift */,
 				595DF2D72C2B46320049C4E2 /* RegisterPage.swift */,
 				557D87522C9F621800EA463F /* CustomProfileImagePicker.swift */,
 				59473D0F2C26DD750033D6A6 /* Assets.xcassets */,
@@ -210,21 +198,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				595DF2D82C2B46320049C4E2 /* RegisterPage.swift in Sources */,
-				59A9F1EE2C2CB8BC00F32C8E /* HelpPage.swift in Sources */,
 				595DF2D62C2B46070049C4E2 /* LoginPage.swift in Sources */,
 				59D95DD42C63401400BCF2B3 /* ImagePicker.swift in Sources */,
-				59A9F1EC2C2CB8AD00F32C8E /* PaymentsAndSubscriptionsPage.swift in Sources */,
 				59473D0E2C26DD730033D6A6 /* ContentView.swift in Sources */,
 				592C4DC62C7EB6970010EE25 /* InfoView.swift in Sources */,
 				59D95DAF2C35809F00BCF2B3 /* EditProfilePage.swift in Sources */,
 				59A9F1E82C2C522600F32C8E /* MenuPage.swift in Sources */,
 				59473D0C2C26DD730033D6A6 /* PROJECTApp.swift in Sources */,
-				59A9F1F02C2CB8CA00F32C8E /* PrivacyPage.swift in Sources */,
 				595DF2DA2C2B465B0049C4E2 /* ForgotPasswordPage.swift in Sources */,
 				59D95DB32C6142D000BCF2B3 /* BusinessAccountPage.swift in Sources */,
 				557D87532C9F621800EA463F /* CustomProfileImagePicker.swift in Sources */,
 				59473D1A2C26DE8D0033D6A6 /* splash.swift in Sources */,
-				59A9F1F22C2CB8DE00F32C8E /* RemoveAdsPage.swift in Sources */,
 				59A9F1EA2C2C524400F32C8E /* AppointmentsPage.swift in Sources */,
 				59A9F1E62C2C513200F32C8E /* HomePage.swift in Sources */,
 			);

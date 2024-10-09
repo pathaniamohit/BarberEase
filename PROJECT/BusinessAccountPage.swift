@@ -1,320 +1,238 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
-import FirebaseFirestore
+import FirebaseStorage
 
 struct BusinessAccountPage: View {
-    @Environment(\.presentationMode) var presentationMode
-    @State private var selectedTab = 0
-    @State private var barberName: String = "Barber Business"
-    @State private var userId: String = Auth.auth().currentUser?.uid ?? ""
+    @State private var coverImage: UIImage? = nil
+    @State private var isImagePickerPresented: Bool = false
+    @State private var coverImageUrl: String = ""
+    @State private var services: [String] = []
+    @State private var upcomingAppointments: [String] = []
+    @State private var completedAppointments: [String] = []
+    
+    private let storage = Storage.storage().reference()
 
     var body: some View {
         NavigationStack {
-            VStack {
-                VStack(spacing: 10) {
-                    Text(barberName)
-                        .font(.title)
+            VStack(spacing: 0) {
+                if let coverImage = coverImage {
+                    Image(uiImage: coverImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: 200)
+                        .clipped()
+                        .onTapGesture(count: 2) {
+                            isImagePickerPresented = true
+                        }
+                } else {
+                    Image(systemName: "photo")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: 200)
+                        .clipped()
+                        .background(Color.gray.opacity(0.3))
+                        .overlay(
+                            Text("Your Business Cover")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .shadow(radius: 5)
+                                .padding(),
+                            alignment: .bottom
+                        )
+                        .onTapGesture(count: 2) {
+                            isImagePickerPresented = true
+                        }
+                }
+
+                VStack(spacing: 15) {
+                    VStack(alignment: .center, spacing: 5) {
+                        HStack {
+                            Spacer()
+                            Text("Services and Pricing")
+                                .font(.headline)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            
+                            Button(action: {
+                                print("Edit Services tapped")
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.blue)
+                                    .padding()
+                                    .background(Color.yellow.opacity(0.8))
+                                    .clipShape(Circle())
+                                    .shadow(radius: 5)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        
+                        Text(services.isEmpty ? "None" : services.joined(separator: ", "))
+                            .font(.subheadline)
+                            .foregroundColor(services.isEmpty ? .gray : .black)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(8)
+                    .shadow(color: .gray.opacity(0.4), radius: 5, x: 0, y: 2)
+                    .padding(.horizontal)
+
+                    VStack(alignment: .center, spacing: 5) {
+                        Text("Upcoming Appointments")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.primary)
+                        Text(upcomingAppointments.isEmpty ? "None" : upcomingAppointments.joined(separator: ", "))
+                            .font(.subheadline)
+                            .foregroundColor(upcomingAppointments.isEmpty ? .gray : .black)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(8)
+                    .shadow(color: .gray.opacity(0.4), radius: 5, x: 0, y: 2)
+                    .padding(.horizontal)
+
+                    VStack(alignment: .center, spacing: 5) {
+                        Text("Completed Appointments")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.primary)
+                        Text(completedAppointments.isEmpty ? "None" : completedAppointments.joined(separator: ", "))
+                            .font(.subheadline)
+                            .foregroundColor(completedAppointments.isEmpty ? .gray : .black)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(8)
+                    .shadow(color: .gray.opacity(0.4), radius: 5, x: 0, y: 2)
+                    .padding(.horizontal)
+                }
+                .padding(.vertical, 20)
+
+                Spacer()
+
+                Button(action: {
+                }) {
+                    Text("Edit Business Profile")
                         .fontWeight(.bold)
-                        .foregroundColor(.yellow)
-
-                    Text("Manage your business settings and services")
-                        .font(.subheadline)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
                         .foregroundColor(.white)
+                        .cornerRadius(8)
+                        .shadow(radius: 5)
+                        .padding(.horizontal)
                 }
-                .padding()
-
-                TabView(selection: $selectedTab) {
-                    HomeView(userId: userId)
-                        .tabItem {
-                            Text("HOME")
-                        }
-                        .tag(0)
-
-                    ServicesView(userId: userId)
-                        .tabItem {
-                            Text("SERVICES")
-                        }
-                        .tag(1)
-                }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+                .padding(.bottom, 20)
             }
-            .padding()
-            .background(Color.black.edgesIgnoringSafeArea(.all))
+            .background(Color(UIColor.systemGroupedBackground).edgesIgnoringSafeArea(.all))
             .navigationTitle("Business Account")
+            .navigationBarTitleDisplayMode(.inline) // Ensure title is centered
             .navigationBarItems(leading: Button("Cancel") {
-                self.presentationMode.wrappedValue.dismiss()
             })
-            .onAppear(perform: fetchProfile)
-        }
-    }
-
-    private func fetchProfile() {
-        // Fetch profile logic, using placeholder for now
-        self.barberName = "Barber Business"
-    }
-}
-
-struct HomeView: View {
-    var userId: String
-
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                NavigationLink(destination: AddressHoursView(userId: userId)) {
-                    Text("Address & Hours")
-                        .font(.headline)
-                        .padding()
-                        .background(Color.yellow)
-                        .cornerRadius(8)
-                }
-
-                NavigationLink(destination: InfoView(userId: userId)) {
-                    Text("Info")
-                        .font(.headline)
-                        .padding()
-                        .background(Color.yellow)
-                        .cornerRadius(8)
-                }
-
-                Text("Today's Schedule: No appointments yet")
-                    .foregroundColor(.white)
-                    .padding(.top, 20)
+            .onAppear {
+                fetchCoverImage()
             }
-            .padding()
-        }
-    }
-}
-
-struct ServicesView: View {
-    var userId: String
-    @State private var name: String = ""
-    @State private var price: String = ""
-    @State private var duration: String = ""
-    @State private var description: String = ""
-    @State private var showingAlert = false
-    @State private var alertMessage = ""
-
-    var body: some View {
-        VStack {
-            Form {
-                Section(header: Text("Service Information")) {
-                    TextField("Name", text: $name)
-                    TextField("Price", text: $price)
-                    TextField("Duration", text: $duration)
-                    TextField("Description", text: $description)
-                }
-
-                Button(action: saveService) {
-                    Text("Save")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.yellow)
-                        .cornerRadius(8)
-                }
-            }
-            .navigationTitle("Services")
-            .alert(isPresented: $showingAlert) {
-                Alert(title: Text("Information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+            .sheet(isPresented: $isImagePickerPresented) {
+                CustomProfileImagePicker(image: $coverImage)
+                    .onDisappear {
+                        if let image = coverImage {
+                            uploadCoverImage(image)
+                        }
+                    }
             }
         }
     }
 
-    private func saveService() {
-        guard !userId.isEmpty else {
-            alertMessage = "User ID is not available."
-            showingAlert = true
+    private func uploadCoverImage(_ image: UIImage) {
+        guard let user = Auth.auth().currentUser else {
+            print("No user logged in")
             return
         }
-
-        let db = Firestore.firestore()
-        let ref = db.collection("business_accounts").document(userId).collection("services").document()
-        let serviceInfo: [String: Any] = [
-            "name": name,
-            "price": price,
-            "duration": duration,
-            "description": description
-        ]
-
-        ref.setData(serviceInfo) { error in
+        
+        guard let imageData = image.jpegData(compressionQuality: 0.75) else {
+            print("Failed to convert image to JPEG data")
+            return
+        }
+        
+        let fileName = "cover.jpg"
+        let imageRef = storage.child("cover_photos/\(user.uid)/\(fileName)")
+        
+        imageRef.putData(imageData, metadata: nil) { metadata, error in
             if let error = error {
-                alertMessage = "Error saving service: \(error.localizedDescription)"
-                showingAlert = true
-            } else {
-                alertMessage = "Service saved successfully!"
-                showingAlert = true
+                print("Failed to upload cover image: \(error.localizedDescription)")
+                return
             }
-        }
-    }
-}
-
-struct AddressHoursView: View {
-    var userId: String
-    @State private var locationType: String = ""
-    @State private var barbershopName: String = ""
-    @State private var streetAddress: String = ""
-    @State private var city: String = ""
-    @State private var state: String = ""
-    @State private var zipCode: String = ""
-    @State private var country: String = "Canada"
-    @State private var hours: String = ""
-    @State private var showingAlert = false
-    @State private var alertMessage = ""
-
-    var body: some View {
-        VStack {
-            Form {
-                Section(header: Text("Address")) {
-                    TextField("Location Type", text: $locationType)
-                    TextField("Barbershop Name", text: $barbershopName)
-                    TextField("Street Address", text: $streetAddress)
-                    TextField("City", text: $city)
-                    TextField("State", text: $state)
-                    TextField("Zip Code", text: $zipCode)
-                    TextField("Country", text: $country)
+            
+            imageRef.downloadURL { url, error in
+                if let error = error {
+                    print("Failed to get download URL: \(error.localizedDescription)")
+                    return
                 }
-
-                Section(header: Text("Hours")) {
-                    TextField("Hours", text: $hours)
+                
+                if let url = url {
+                    print("Cover Image URL: \(url.absoluteString)")
+                    saveCoverImageUrlToRealtimeDatabase(url.absoluteString)
                 }
-
-                Button(action: saveAddressAndHours) {
-                    Text("Save")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.yellow)
-                        .cornerRadius(8)
-                }
-            }
-            .navigationTitle("Address & Hours")
-            .alert(isPresented: $showingAlert) {
-                Alert(title: Text("Information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
             }
         }
     }
 
-    private func saveAddressAndHours() {
-        guard !userId.isEmpty else {
-            alertMessage = "User ID is not available."
-            showingAlert = true
+    private func saveCoverImageUrlToRealtimeDatabase(_ url: String) {
+        guard let user = Auth.auth().currentUser else {
+            print("No user logged in")
             return
         }
-
-        let db = Firestore.firestore()
-        let ref = db.collection("business_accounts").document(userId).collection("address").document("details")
-        let addressInfo: [String: Any] = [
-            "locationType": locationType,
-            "barbershopName": barbershopName,
-            "streetAddress": streetAddress,
-            "city": city,
-            "state": state,
-            "zipCode": zipCode,
-            "country": country,
-            "hours": hours
-        ]
-
-        ref.setData(addressInfo) { error in
+        
+        let ref = Database.database().reference().child("business_accounts").child(user.uid)
+        
+        ref.updateChildValues(["coverImageUrl": url]) { error, _ in
             if let error = error {
-                alertMessage = "Error saving address and hours: \(error.localizedDescription)"
-                showingAlert = true
+                print("Error saving cover image URL to Realtime Database: \(error.localizedDescription)")
             } else {
-                alertMessage = "Address and hours saved successfully!"
-                showingAlert = true
-            }
-        }
-    }
-}
-
-struct InfoView: View {
-    var userId: String
-    @State private var name: String = ""
-    @State private var bio: String = ""
-    @State private var phoneNumber: String = ""
-    @State private var showingAlert = false
-    @State private var alertMessage = ""
-
-    var body: some View {
-        VStack {
-            Form {
-                Section(header: Text("Name")) {
-                    TextField("Enter your name", text: $name)
-                }
-                Section(header: Text("Bio")) {
-                    TextField("Enter a short bio", text: $bio)
-                }
-                Section(header: Text("Phone Number")) {
-                    TextField("Enter your phone number", text: $phoneNumber)
-                        .keyboardType(.phonePad)
-                }
-
-                Button(action: saveInfo) {
-                    Text("Save")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.yellow)
-                        .cornerRadius(8)
-                }
-            }
-            .navigationTitle("Business Info")
-            .onAppear(perform: fetchInfo)
-            .alert(isPresented: $showingAlert) {
-                Alert(title: Text("Information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                print("Cover image URL saved successfully in Realtime Database")
             }
         }
     }
 
-    private func fetchInfo() {
-        guard !userId.isEmpty else {
-            alertMessage = "User ID is not available."
-            showingAlert = true
+    private func fetchCoverImage() {
+        guard let user = Auth.auth().currentUser else {
+            print("No user logged in")
             return
         }
-
-        let db = Firestore.firestore()
-        let ref = db.collection("business_accounts").document(userId)
-        ref.getDocument { (document, error) in
-            if let document = document, document.exists {
-                let data = document.data()
-                self.name = data?["name"] as? String ?? ""
-                self.bio = data?["bio"] as? String ?? ""
-                self.phoneNumber = data?["phoneNumber"] as? String ?? ""
-            } else {
-                self.alertMessage = "Failed to fetch user information."
-                self.showingAlert = true
+        
+        let ref = Database.database().reference().child("business_accounts").child(user.uid)
+        
+        ref.child("coverImageUrl").observeSingleEvent(of: .value) { snapshot in
+            if let urlString = snapshot.value as? String {
+                loadImageFromUrl(urlString: urlString)
             }
         }
     }
 
-    private func saveInfo() {
-        guard !userId.isEmpty else {
-            alertMessage = "User ID is not available."
-            showingAlert = true
+    private func loadImageFromUrl(urlString: String) {
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
             return
         }
-
-        let db = Firestore.firestore()
-        let ref = db.collection("business_accounts").document(userId)
-        let userInfo: [String: Any] = [
-            "name": name,
-            "bio": bio,
-            "phoneNumber": phoneNumber
-        ]
-
-        ref.setData(userInfo) { error in
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
-                alertMessage = "Error saving data: \(error.localizedDescription)"
-                showingAlert = true
-            } else {
-                alertMessage = "Information saved successfully!"
-                showingAlert = true
+                print("Error downloading cover image: \(error.localizedDescription)")
+                return
             }
-        }
-    }
-}
-
-struct BusinessAccountPage_Previews: PreviewProvider {
-    static var previews: some View {
-        BusinessAccountPage()
+            
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    self.coverImage = image
+                }
+            } else {
+                print("Failed to decode image data")
+            }
+        }.resume()
     }
 }
