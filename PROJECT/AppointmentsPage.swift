@@ -18,53 +18,52 @@ struct AppointmentsPage: View {
     @State private var completedAppointments: [Appointment] = []
 
     var body: some View {
-        VStack {
-            Text("Appointments")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding()
+        NavigationStack{
+            VStack {
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    if !upcomingAppointments.isEmpty {
-                        Text("Upcoming")
-                            .font(.headline)
-                            .padding(.leading)
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 16) {
+                        if !upcomingAppointments.isEmpty {
+                            Text("Upcoming")
+                                .font(.headline)
+                                .padding(.leading)
 
-                        ForEach(upcomingAppointments) { appointment in
-                            AppointmentCardView(appointment: appointment)
-                                .padding([.leading, .trailing])
+                            ForEach(upcomingAppointments) { appointment in
+                                AppointmentCardView(appointment: appointment)
+                                    .padding([.leading, .trailing])
+                            }
+                        } else {
+                            Text("No upcoming appointments")
+                                .font(.subheadline)
+                                .padding(.leading)
+                                .foregroundColor(.gray)
                         }
-                    } else {
-                        Text("No upcoming appointments")
-                            .font(.subheadline)
-                            .padding(.leading)
-                            .foregroundColor(.gray)
-                    }
 
-                    if !completedAppointments.isEmpty {
-                        Text("Completed")
-                            .font(.headline)
-                            .padding(.leading)
+                        if !completedAppointments.isEmpty {
+                            Text("Completed")
+                                .font(.headline)
+                                .padding(.leading)
 
-                        ForEach(completedAppointments) { appointment in
-                            AppointmentCardView(appointment: appointment)
-                                .padding([.leading, .trailing])
+                            ForEach(completedAppointments) { appointment in
+                                AppointmentCardView(appointment: appointment)
+                                    .padding([.leading, .trailing])
+                            }
+                        } else {
+                            Text("No completed appointments")
+                                .font(.subheadline)
+                                .padding(.leading)
+                                .foregroundColor(.gray)
                         }
-                    } else {
-                        Text("No completed appointments")
-                            .font(.subheadline)
-                            .padding(.leading)
-                            .foregroundColor(.gray)
                     }
+                    .padding(.top, 20) // Add extra padding to the content if needed
                 }
             }
-        }
-        .padding()
-        .background(Color(UIColor.systemGroupedBackground))
-        .navigationBarTitle("Appointments", displayMode: .inline)
-        .onAppear {
-            fetchUserAppointments()
+            .padding()
+            .background(Color(UIColor.systemGroupedBackground))
+            .navigationBarTitle("Appointments", displayMode: .inline)
+            .onAppear {
+                fetchUserAppointments()
+            }
         }
     }
 

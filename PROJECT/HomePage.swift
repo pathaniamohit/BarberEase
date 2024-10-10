@@ -23,7 +23,13 @@ struct HomePage: View {
     @State private var barbers: [Barber] = []
 
     init() {
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.blue]
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor.systemBlue,
+            .font: UIFont.systemFont(ofSize: 30, weight: .bold)
+        ]
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
 
     var body: some View {
@@ -54,6 +60,8 @@ struct HomePage: View {
     }
 
     private func fetchBarbers() {
+        self.barbers.removeAll()
+
         let db = Database.database().reference().child("business_accounts")
         db.observe(.childAdded) { snapshot, previousKey in
             guard let barberData = snapshot.value as? [String: Any],

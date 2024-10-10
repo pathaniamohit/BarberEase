@@ -117,6 +117,7 @@ struct BusinessAccountPage: View {
                         VStack(alignment: .center, spacing: 5) {
                             Text("Completed Appointments")
                                 .font(.headline)
+                                .frame(maxWidth: .infinity)
                                 .foregroundColor(.primary)
                             
                             if completedAppointments.isEmpty {
@@ -246,9 +247,11 @@ struct BusinessAccountPage: View {
         let db = Database.database().reference().child("users").child(userId)
         db.observeSingleEvent(of: .value) { snapshot in
             if let data = snapshot.value as? [String: Any],
-               let username = data["username"] as? String {
-                completion(username)
+               let fullName = data["fullName"] as? String {
+                print("Fetched fullName: \(fullName) for userId: \(userId)")
+                completion(fullName)
             } else {
+                print("Failed to fetch fullname for userId: \(userId). Data: \(snapshot.value ?? "No data")")
                 completion("Unknown User")
             }
         }
@@ -395,7 +398,7 @@ struct BarberAppointmentCardView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("User: \(appointment.username)")
+            Text("Client: \(appointment.username)")
                 .font(.headline)
             Text("Date: \(formattedDate(appointment.date))")
                 .font(.subheadline)
