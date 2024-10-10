@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5526518D2CB745B400E6B56A /* ServicesPricing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5526518C2CB745B400E6B56A /* ServicesPricing.swift */; };
+		5526518F2CB749EB00E6B56A /* BusinessProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5526518E2CB749EB00E6B56A /* BusinessProfile.swift */; };
 		557D87532C9F621800EA463F /* CustomProfileImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557D87522C9F621800EA463F /* CustomProfileImagePicker.swift */; };
 		592C4DC62C7EB6970010EE25 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592C4DC52C7EB6970010EE25 /* InfoView.swift */; };
 		59473D0C2C26DD730033D6A6 /* PROJECTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59473D0B2C26DD730033D6A6 /* PROJECTApp.swift */; };
@@ -32,6 +34,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5526518C2CB745B400E6B56A /* ServicesPricing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesPricing.swift; sourceTree = "<group>"; };
+		5526518E2CB749EB00E6B56A /* BusinessProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessProfile.swift; sourceTree = "<group>"; };
 		557D87522C9F621800EA463F /* CustomProfileImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProfileImagePicker.swift; sourceTree = "<group>"; };
 		592C4DC52C7EB6970010EE25 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		59473D082C26DD730033D6A6 /* PROJECT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PROJECT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,8 +106,10 @@
 				59D95DB22C6142D000BCF2B3 /* BusinessAccountPage.swift */,
 				595DF2D72C2B46320049C4E2 /* RegisterPage.swift */,
 				557D87522C9F621800EA463F /* CustomProfileImagePicker.swift */,
+				5526518C2CB745B400E6B56A /* ServicesPricing.swift */,
 				59473D0F2C26DD750033D6A6 /* Assets.xcassets */,
 				59473D112C26DD750033D6A6 /* Preview Content */,
+				5526518E2CB749EB00E6B56A /* BusinessProfile.swift */,
 			);
 			path = PROJECT;
 			sourceTree = "<group>";
@@ -204,11 +210,13 @@
 				592C4DC62C7EB6970010EE25 /* InfoView.swift in Sources */,
 				59D95DAF2C35809F00BCF2B3 /* EditProfilePage.swift in Sources */,
 				59A9F1E82C2C522600F32C8E /* MenuPage.swift in Sources */,
+				5526518D2CB745B400E6B56A /* ServicesPricing.swift in Sources */,
 				59473D0C2C26DD730033D6A6 /* PROJECTApp.swift in Sources */,
 				595DF2DA2C2B465B0049C4E2 /* ForgotPasswordPage.swift in Sources */,
 				59D95DB32C6142D000BCF2B3 /* BusinessAccountPage.swift in Sources */,
 				557D87532C9F621800EA463F /* CustomProfileImagePicker.swift in Sources */,
 				59473D1A2C26DE8D0033D6A6 /* splash.swift in Sources */,
+				5526518F2CB749EB00E6B56A /* BusinessProfile.swift in Sources */,
 				59A9F1EA2C2C524400F32C8E /* AppointmentsPage.swift in Sources */,
 				59A9F1E62C2C513200F32C8E /* HomePage.swift in Sources */,
 			);
