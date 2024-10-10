@@ -49,7 +49,7 @@ struct ContentView: View {
             Spacer()
             bottomNavigationBar
         }
-        .background(Color(UIColor(red: 1.0, green: 0.97, blue: 0.89, alpha: 1.0)))
+        .background(Color.white)
         .edgesIgnoringSafeArea(.all)
     }
 

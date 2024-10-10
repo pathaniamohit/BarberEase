@@ -1,7 +1,7 @@
 import SwiftUI
 import Firebase
 import FirebaseDatabase
-import FirebaseStorage 
+import FirebaseStorage
 
 struct Barber: Identifiable {
     let id: String
@@ -22,6 +22,7 @@ struct HomePage: View {
     @Binding var showBusiness: Bool
     @State private var searchText: String = ""
     @State private var barbers: [Barber] = []
+    @State private var filteredBarbers: [Barber] = []
 
     var body: some View {
         ScrollView {
@@ -30,13 +31,26 @@ struct HomePage: View {
                     HStack {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.gray)
-                        TextField("Search", text: $searchText)
-                            .foregroundColor(.gray)
+                        TextField("Search", text: $searchText, onCommit: {
+                            performSearch()
+                        })
+                        .foregroundColor(.gray)
                     }
                     .padding()
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(10)
                     
+                    Button(action: {
+                        performSearch()
+                    }) {
+                        Text("Go")
+                            .foregroundColor(.white)
+                            .frame(height: 35)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    }
                 }
                 .padding([.leading, .trailing, .top])
                 .padding(.top, getTopSafeArea())
@@ -46,9 +60,7 @@ struct HomePage: View {
                     .padding(.top, 10)
                     .padding([.leading, .trailing])
                 
-                ForEach(barbers.filter { barber in
-                    searchText.isEmpty ? true : barber.shopName.lowercased().contains(searchText.lowercased())
-                }) { barber in
+                ForEach(filteredBarbers) { barber in
                     BarberCardView(barber: barber)
                         .padding([.leading, .trailing, .top])
                 }
@@ -91,6 +103,17 @@ struct HomePage: View {
             
             let barber = Barber(id: snapshot.key, shopName: shopName, address: address, coverPhotoURL: coverPhotoURL, openingHours: openingHoursDict, services: services)
             self.barbers.append(barber)
+            self.filteredBarbers = self.barbers // Initially show all barbers
+        }
+    }
+    
+    private func performSearch() {
+        if searchText.isEmpty {
+            filteredBarbers = barbers
+        } else {
+            filteredBarbers = barbers.filter { barber in
+                barber.shopName.lowercased().contains(searchText.lowercased())
+            }
         }
     }
 }
