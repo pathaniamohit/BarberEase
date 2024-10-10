@@ -34,7 +34,7 @@ struct ContentView: View {
         VStack(spacing: 0) {
             switch selectedView {
             case .home:
-                HomePage(showBusiness: $showBusiness)
+                HomePage()
             case .appointments:
                 AppointmentsPage()
             case .menu:
@@ -43,7 +43,7 @@ struct ContentView: View {
                 if showBusiness {
                     BusinessAccountPage()
                 } else {
-                    HomePage(showBusiness: $showBusiness) // Default to Home if business is not enabled
+                    HomePage() // Default to Home if business is not enabled
                 }
             }
             Spacer()

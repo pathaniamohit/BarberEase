@@ -93,7 +93,7 @@ struct RegisterPage: View {
                     .transition(.opacity)
                 }
 
-                NavigationLink("", destination: HomePage(showBusiness: $showBusiness), isActive: $navigateToHome) // NavigationLink to HomePage with binding
+                NavigationLink("", destination: HomePage(), isActive: $navigateToHome) // NavigationLink to HomePage with binding
             }
         }
     }
